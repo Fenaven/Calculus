@@ -1,15 +1,45 @@
-import sympy as sp
-import numpy as np
-import copy
 import matplotlib.pyplot as plt
-def setLinesv3(size):
-    delta = 0.025
+import numpy as np
+def setLinesXY(size=5, lines=20, delta=0.025, fill = False):
     x = np.arange(-size, size, delta)
     y = np.arange(-size, size, delta)
     X, Y = np.meshgrid(x, y)
     Z = np.arctan(2*Y/(1-X*X-Y*Y))
     fig, ax = plt.subplots()
-    CS = ax.contour(X, Y, Z, 20, cmap ='plasma')
-    ax.set_title('Level set')
-setLinesv3(5)
-plt.savefig("CalcT1.png")
+    if fill:
+        CS = ax.contourf(X, Y, Z, lines, cmap ='gist_rainbow')
+    else:
+        CS = ax.contour(X, Y, Z, lines, cmap ='gist_rainbow')
+    ax.set_title('Level set, XY')
+def setLinesZX(size=5, lines=20, delta=0.025, fill = False):
+    x = np.arange(-size, size, delta)
+    y = np.arange(-size, size, delta)
+    X, Y = np.meshgrid(x, y)
+    Z = np.arctan(2*Y/(1-X*X-Y*Y))
+    fig, ax = plt.subplots()
+    if fill:
+        CS = ax.contourf(Y, Z, X, lines, cmap ='gist_rainbow')
+    else:
+        CS = ax.contour(Y, Z, X, lines, cmap ='gist_rainbow')
+    ax.set_title('Level set, XZ')
+def setLinesZY(size=5, lines=20, delta=0.025, fill = False):
+    x = np.arange(-size, size, delta)
+    y = np.arange(-size, size, delta)
+    X, Y = np.meshgrid(x, y)
+    Z = np.arctan(2*Y/(1-X*X-Y*Y))
+    fig, ax = plt.subplots()
+    if fill:
+        CS = ax.contourf(X, Z, Y, lines, cmap ='gist_rainbow')
+    else:
+        CS = ax.contour(X, Z, Y, lines, cmap ='gist_rainbow')
+    ax.set_title('Level set, YZ')
+size = 5
+delta = 0.01
+lines = 40
+fill = False
+setLinesXY(size=size, lines=lines, delta=delta, fill=fill)
+plt.savefig("LineSetXY.png")
+setLinesZX(size=size, lines=lines, delta=delta, fill=fill)
+plt.savefig("LineSetXZ.png")
+setLinesZY(size=size, lines=lines, delta=delta, fill=fill)
+plt.savefig("LineSetYZ.png")
